@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionário - Descubra seu Pingu</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body class="poppins-regular">
+    <div class="card">
+        <div id="div_fotoHeader" class="fotoHeader">
+            <img width="35%" class="" src="./assets/imgs/pingu-abertura-sem-fundo - Editado.png" alt="">
+        </div>
+
+        <div class="texto" style="display: block;" id="div_cadastro">
+            <h1 class="titulo">Olá <i class="fa-regular fa-face-laugh-beam"></i>
+                <br>
+                Qual seu nome?
+            </h1>
+            <input type="text" class="input_nome" id="input_nome" placeholder="Digite seu nome aqui...">
+            <br> <br>
+            Gosta do desenho do Pingu?
+            <select name="" id="select_gosto">
+                <option value="#" selected disabled>Selecione uma opção</option>
+                <option value="S">Sim</option>
+                <option value="N">Não</option>
+                <option value="NA">Nunca assisti</option>
+            </select>
+            <button onclick="cadastrar()" class="botao">Começar Quizz</button>
+        </div>
+
+        <div class="texto" style="display: none;" id="div_pergunta1">
+            <h2 class="titulo">O que você gosta de fazer no fim de semana?</h2>
+            <input type="radio" class="input_radio" name="perg1" id="" value="p1"> Pescar <br>
+            <input type="radio" class="input_radio" name="perg1" id="" value="p4,p5"> Ficar com a minha família <br>
+            <input type="radio" class="input_radio" name="perg1" id="" value="p2"> Ir para o circo <br>
+            <input type="radio" class="input_radio" name="perg1" id="" value="p3"> Dormir <br>
+            <br>
+            <button onclick="proximo('div_pergunta1')" class="botaoQuiz"><i class="fa-solid fa-right-long"></i></button>
+        </div>
+
+        <div class="texto" style="display: none;" id="div_pergunta2">
+            <h2 class="titulo">Qual sua comida preferida?</h2>
+            <input type="radio" class="input_radio" id="" name="perg2" value="p1"> Sushi <br>
+            <input type="radio" class="input_radio" id="" name="perg2" value="p4"> Bolo <br>
+            <input type="radio" class="input_radio" id="" name="perg2" value="p3,p5"> Pizza <br>
+            <input type="radio" class="input_radio" id="" name="perg2" value="p2"> Batata com milkshake <br>
+            <br>
+            <button onclick="proximo('div_pergunta2')" class="botaoQuiz"><i class="fa-solid fa-right-long"></i></button>
+        </div>
+
+        <div class="texto" style="display: none;" id="div_pergunta3">
+            <h2 class="titulo">Em uma festa você...</h2>
+            <input type="radio" class="input_radio" id="" name="perg3" value="p5"> Gosta de dançar <br>
+            <input type="radio" class="input_radio" id="" name="perg3" value="p1,p3"> Prefiro nem ir <br>
+            <input type="radio" class="input_radio" id="" name="perg3" value="p4"> Aproveitar as comidas <br>
+            <input type="radio" class="input_radio" id="" name="perg3" value="p2"> Ouvir pinkfloyd enquanto assisto o
+            mágico de Oz <br>
+            <br>
+            <button onclick="proximo('div_pergunta3')" class="botaoQuiz"><i class="fa-solid fa-right-long"></i></button>
+        </div>
+
+        <div class="texto" style="display: none;" id="div_pergunta4">
+            <h2 class="titulo">Qual seu hobby preferido?</h2>
+            <input type="radio" class="input_radio" id="" name="perg4" value="p5"> Tocar música <br>
+            <input type="radio" class="input_radio" id="" name="perg4" value="p1"> Nadar <br>
+            <input type="radio" class="input_radio" id="" name="perg4" value="p3"> Ler <br>
+            <input type="radio" class="input_radio" id="" name="perg4" value="p2,p4"> Jogar <br>
+            <br>
+            <button onclick="proximo('div_pergunta4')" class="botaoQuiz"><i class="fa-solid fa-right-long"></i></button>
+        </div>
+
+        <div class="texto" style="display: none;" id="div_resultado">
+            <img src="./assets/imgs/pingu-bravo.jpeg" alt="">
+            <h1>Tome aqui seu resultado</h1>
+        </div>
+
+        <div class="erro" style="display: none;" id="div_erro">
+            <h2>Erro <i class="fa-solid fa-bug"></i></h2>
+        </div>
+    </div>
+
+
+
+
+</body>
+
+</html>
+<script>
+
+
+    class MinhaClasse {
+        sort(lista) {
+            //...
+        }
+    }
+
+    const classe = new MinhaClasse();
+
+    console.log(classe.sort([3, 2, 6, 4, 8]));
+
+    const divs = ["div_cadastro",
+        "div_pergunta1",
+        "div_pergunta2",
+        "div_pergunta3",
+        "div_pergunta4",
+        "div_resultado"]
+
+    let queryValuePerg1 = "";
+    let queryValuePerg2 = "";
+    let queryValuePerg3 = "";
+    let queryValuePerg4 = "";
+
+    let personalidades = [
+        {"Personalidade": "pescador", "Pontuacao": 0,},
+        {"Personalidade": "maluco", "Pontuacao": 0,},
+        {"Personalidade": "sonequinha", "Pontuacao": 0,},
+        {"Personalidade": "familiar", "Pontuacao": 0,},
+        {"Personalidade": "musical", "Pontuacao": 0}
+    ]
+
+    let P1 = 0;
+    let P2 = 0;
+    let P3 = 0;
+    let P4 = 0;
+    let P5 = 0;
+
+    function divErro(mensagem) {
+
+    }
+
+
+    function divNone(div) {
+        document.getElementById(div).style = "display: none"
+    }
+
+    function divBlock(div) {
+        document.getElementById(div).style = "display: block"
+    }
+
+    function cadastrar() {
+        nome = input_nome.value
+        select = select_gosto.value
+
+        if (nome !== null && select !== "#") {
+            console.log('funçao para cadastrar')
+
+            divNone(divs[0])
+            divBlock(divs[1])
+        } else {
+            alert('selecione uma opçao')
+        }
+    }
+
+    function proximo(div) {
+        let divAtual = "";
+        let proximaDiv = "";
+        // console.log("resposta: ", div);
+
+        if (div === divs[0]) {
+            divNone(divs[0]);
+            divBlock(divs[1]);
+
+            divAtual = divs[0];
+            proximaDiv = divs[1];
+
+        } else if (div === divs[1]) {
+            divNone(divs[0]);
+            divBlock(divs[1]);
+
+            divAtual = divs[1];
+            proximaDiv = divs[2];
+
+        } else if (div === divs[2]) {
+            divNone(divs[1]);
+            divBlock(divs[2]);
+
+            divAtual = divs[2];
+            proximaDiv = divs[3];
+
+        } else if (div === divs[3]) {
+            divNone(divs[2]);
+            divBlock(divs[3]);
+
+            divAtual = divs[3];
+            proximaDiv = divs[4];
+
+        } else if (div === divs[4]) {
+            divNone(divs[3]);
+            divBlock(divs[4]);
+
+            divAtual = divs[4];
+            proximaDiv = divs[5];
+
+            divNone('div_fotoHeader');
+
+            resultado();
+
+        } else {
+            alert('div não identificada')
+        }
+
+        var queryValue = descobrirQueryValue(div);
+        console.log("query value: ", queryValue)
+
+        if (queryValue === '#') {
+            alert('selecione uma opçao')
+
+        } else {
+            adicionarPontos(queryValue);
+
+            divNone(divAtual);
+            divBlock(proximaDiv);
+            return;
+        }
+    }
+
+    function descobrirQueryValue(div) {
+        if (div === divs[1]) {
+
+            return queryValue = document.querySelector('input[name="perg1"]:checked').value;
+
+        } else if (div === divs[2]) {
+            return queryValue = document.querySelector('input[name="perg2"]:checked').value;
+
+        } else if (div === divs[3]) {
+            return queryValue = document.querySelector('input[name="perg3"]:checked').value;
+
+        } else if (div === divs[4]) {
+            return queryValue = document.querySelector('input[name="perg4"]:checked').value;
+
+        } else {
+            alert('Você está no cadastro ou no resultado')
+            return queryValue = '#'
+        }
+
+    }
+
+    function adicionarPontos(queryValue) {
+        console.log('queryValue no adicionarPontos: ', queryValue)
+
+        if (queryValue.includes("p1")) {
+            //P1 += 1;
+            personalidades[0].Pontuacao += 1
+            console.log("p1 ganhou ponto")
+        }
+
+        if (queryValue.includes("p2")) {
+            //P2 += 1;
+            personalidades[1].Pontuacao += 1
+            console.log("p2 ganhou ponto")
+        }
+
+        if (queryValue.includes("p3")) {
+            //P3 += 1;
+            personalidades[2].Pontuacao += 1
+            console.log("p3 ganhou ponto")
+
+        }
+
+        if (queryValue.includes("p4")) {
+            //P4 += 1;
+            personalidades[3].Pontuacao += 1
+            console.log("p4 ganhou ponto")
+
+        }
+
+        if (queryValue.includes("p5")) {
+            //P5 += 1;
+            personalidades[4].Pontuacao += 1
+            console.log("p5 ganhou ponto")
+
+        }
+
+    }
+
+    function resultado() {
+
+        const pontuacoes = personalidades.map(persona => persona.Pontuacao);
+        const maiorPontuacao = Math.max(...pontuacoes)
+        console.log("maior pontuação:", maiorPontuacao)
+
+        const personalidadeVencedora = personalidades.find(
+            persona => persona.Pontuacao === maiorPontuacao
+        )
+        console.log("personalidade vencedora:", personalidadeVencedora.Personalidade)
+
+
+        if (personalidadeVencedora.Personalidade === "pescador" ) {
+            document.getElementById(divs[5]).innerHTML = `<img src="./assets/imgs/pingu-bravo.jpeg" alt="">
+            <h1>Tome aqui seu resultado</h1>
+            <p> Pingu Pescador </p>`
+
+        } else if (personalidadeVencedora.Personalidade === "maluco") {
+            document.getElementById(divs[5]).innerHTML = `<img src="./assets/imgs/pingu-bravo.jpeg" alt="">
+            <h1>Tome aqui seu resultado</h1>
+            <p> Pingu Maluco </p>`
+
+        } else if (personalidadeVencedora.Personalidade === "sonequinha") {
+            document.getElementById(divs[5]).innerHTML = `<img src="./assets/imgs/pingu-bravo.jpeg" alt="">
+            <h1>Tome aqui seu resultado</h1>
+            <p> Pinga Sonequinha </p>`
+
+        } else if (personalidadeVencedora.Personalidade === "familiar") {
+            document.getElementById(divs[5]).innerHTML = `<img src="./assets/imgs/pingu-bravo.jpeg" alt="">
+            <h1>Tome aqui seu resultado</h1>
+            <p> Pingu Familiar </p>`
+
+        } else if (personalidadeVencedora.Personalidade === "musical") {
+            document.getElementById(divs[5]).innerHTML = `<img src="./assets/imgs/pingu-bravo.jpeg" alt="">
+            <h1>Tome aqui seu resultado</h1>
+            <p> Pingu Musical </p>`
+
+        } else {
+            document.getElementById(divs[5]).innerHTML = `<img src="./assets/imgs/pingu-bravo.jpeg" alt="">
+            <h1>Tome aqui seu resultado</h1>
+            <p> Não encontrei um resultado pra voce </p>`
+        }
+
+
+        // Pingu pescador - p1
+        // Pingu maluco - p2
+        // Pinga Sonequinha - p3
+        // Pingu familiar - p4
+        // Pingu musical - p5
+
+        /*
+           let maiorResultadoIndice;
+   
+           let resultadoAuxiliar;
+   
+           var resultados = [
+               P1,
+               P2,
+               P3,
+               P4,
+               P5
+           ]
+   
+      
+           //4, 6, 8, 2, 1
+           //2,6,8,4,1
+           //1,6,8,4,2
+           //1,4,8,6,2
+           //1,2,8,6,4
+           //1,2,6,8,4
+           console.log("personalidade 1:",P1)
+               console.log("vetor antes",resultados)
+   
+           for (var j = 0; j < resultados.length; j++) {
+     
+               for (var i = 1; i < resultados.length; i++) {
+                       if(resultados[j] > resultado[i]){
+                           resultadoAuxiliar = resultadoAuxiliar[j]
+                           resultados[j] = resultados[i]
+                           resultados[i] = resultadoAuxiliar
+                       }
+               }
+           }
+   
+      
+           console.log("Resultados:",
+               "P1: ", P1,
+               "P2: ", P2,
+               "P3: ", P3,
+               "P4: ", P4,
+               "P5: ", P5)
+               console.log("vetor",resultados)
+           console.log('resultado na posição 0:', resultados[0])
+   
+   
+           for (var i = 0; i < resultados.length; i++) {
+               if (resultados[i] > resultados[i + 1]) {
+                   console.log("resultadao ", resultados[0])
+                   resultadoAuxiliar = resultados[i + 1]
+                   resultados[i + 1] = resultados[i]
+                   resultados[i] = resultadoAuxiliar
+   
+               } else {
+   
+                   console.log("resultadao ", resultados[0])
+                   continue;
+                   // resultadoAuxiliar = resultados[i++]
+               }
+           }*/
+
+        // Pingu pescador - p1
+        // Pingu maluco - p2
+        // Pinga Sonequinha - p3
+        // Pingu familiar - p4
+        // Pingu musical - p5 Função bubble sort (ordenação)
+
+
+    }
+
+    /*
+    perguntas
+    Pingu pescador - p1
+    Pingu maluco - p2
+    Pinga Sonequinha - p3
+    Pingu familiar - p4
+    Pingu musical - p5
+    
+    1 - Qual sua comida preferida?
+    Sushi +1 - pescador
+    Bolo +1 - familiar / musical
+    Pizza +1 - sonequinha
+    Batata com milkshake +1 - maluco
+    
+    2 - O que você gosta de fazer no fim de semana?
+    Pescar +1 - pescador
+    Ficar com a minha família +1 - familiar
+    Ir para o circo +1 - maluco / musical
+    Dormir +1 - sonquinha 
+    
+    3 - Em uma festa você..
+    Gosta de dançar +1 - musical
+    Prefiro nem ir +1 - pescador / sonequinha
+    Aproveitar as comidas +1 - familiar
+    Ouvir pinkfloyd enquanto assisto o mágico de Oz +1 - maluco
+    
+    4 - Qual seu hobby preferido?
+    Tocar música +1 - musical
+    Nadar +1 - pescador
+    Ler +1 - sonequinha
+    Jogar +1 -  maluco
+    
+    */
+</script>

@@ -1,0 +1,108 @@
+body {
+  background-color: #ff2c17;
+  padding: 8%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  background-color: white;
+  box-shadow: #0417927c 0 4px 13px;
+  border-radius: 10%;
+  width: 40%;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5%;
+}
+
+.fotoHeader {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 26px;
+}
+
+.texto {
+  color: #041692;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.poppins-regular {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.input_nome {
+  border-radius: 20px;
+  height: 26px;
+  width: 100%;
+  border: solid #8eb6f9 2px;
+  color: #04179291;
+  font-size: 14px;
+  padding: 2%;
+}
+
+.botao {
+  border: none;
+  border-radius: 15px;
+  background-color: #041692;
+  box-shadow: #00000084 0 2px 5px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  height: 32px;
+  width: 50%;
+  margin-top: 26px;
+  padding: 2%;
+  transition: 0.3ease background-color;
+}
+
+.botao:hover,
+.botaoQuiz:hover {
+  background-color: #8eb6f9;
+  box-shadow: #8eb6f9 0 2px 5px;
+}
+
+.botaoQuiz {
+  border: none;
+  background-color: #041692;
+  box-shadow: #00000084 0 2px 5px;
+  border-radius: 10px;
+  color: white;
+  height: 28px;
+  width: 28px;
+}
+
+.input_radio {
+  border-radius: 10px;
+}
+
+select {
+  background-color: white;
+  border: none;
+  border-radius: 20px;
+  height: 26px;
+  width: 100%;
+  border: solid #8eb6f9 2px;
+  color: #04179291;
+}
+
+.erro {
+  color: #ff2c17;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: #00000084 0 2px 5px;
+  width: 300px;
+  height: 200px;
+  position: fixed;
+  top: 100px;
+  right: 500px;
+  display: flex;
+  align-content: center;
+  padding: 1%;
+}

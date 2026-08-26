@@ -1,0 +1,52 @@
+package com.projeto.individual;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.web.bind.annotation.*;
+
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+
+@CrossOrigin
+@RestController
+@RequestMapping("/usuario")
+public class UsuarioController {
+    private JdbcTemplate jdbcTemplate;
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Usuario> getJaAssistiu(@PathVariable Integer id){
+        String sql = "select jaAssistiu from usuario where id = ?;";
+
+        try {
+            Usuario usuario = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Usuario.class), id);
+
+            return ResponseEntity.status(200).body(usuario);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @PostMapping("/cadastrar")
+    public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody Usuario usuarioParaCriar){
+        String sql = "insert into usuarios (nickname, jaAssistiu) values (?,?);";
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jdbcTemplate.update(con -> {
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, usuarioParaCriar.getNickname());
+            ps.setString(2, usuarioParaCriar.getJaAssistiu());
+
+            return ps;
+        }, keyHolder);
+
+        Integer idGerado = keyHolder.getKeyAs(Integer.class);
+        usuarioParaCriar.setIdNickname(idGerado);
+
+        return ResponseEntity.status(2000).body(usuarioParaCriar);
+    }
+}
