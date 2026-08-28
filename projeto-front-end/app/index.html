@@ -43,19 +43,19 @@
 
         <div class="texto" style="display: none;" id="div_pergunta1">
             <h2 class="titulo">O que você gosta de fazer no fim de semana?</h2>
-            <input type="radio" class="input_radio" name="perg1" id="" value="p1"> Pescar <br>
+            <input type="radio" class="input_radio" name="perg1" id="" value="p1"> Pescar no pesqueiro <br>
             <input type="radio" class="input_radio" name="perg1" id="" value="p4,p5"> Ficar com a minha família <br>
             <input type="radio" class="input_radio" name="perg1" id="" value="p2"> Ir para o circo <br>
-            <input type="radio" class="input_radio" name="perg1" id="" value="p3"> Dormir <br>
+            <input type="radio" class="input_radio" name="perg1" id="" value="p3"> Dormir numa cama quentinha <br>
             <br>
             <button onclick="proximo('div_pergunta1')" class="botaoQuiz"><i class="fa-solid fa-right-long"></i></button>
         </div>
 
         <div class="texto" style="display: none;" id="div_pergunta2">
             <h2 class="titulo">Qual sua comida preferida?</h2>
-            <input type="radio" class="input_radio" id="" name="perg2" value="p1"> Sushi <br>
-            <input type="radio" class="input_radio" id="" name="perg2" value="p4"> Bolo <br>
-            <input type="radio" class="input_radio" id="" name="perg2" value="p3,p5"> Pizza <br>
+            <input type="radio" class="input_radio" id="" name="perg2" value="p1"> Sushi e pescados <br>
+            <input type="radio" class="input_radio" id="" name="perg2" value="p4"> Bolo e docinhos <br>
+            <input type="radio" class="input_radio" id="" name="perg2" value="p3,p5"> Pizza e Coca-cola <br>
             <input type="radio" class="input_radio" id="" name="perg2" value="p2"> Batata com milkshake <br>
             <br>
             <button onclick="proximo('div_pergunta2')" class="botaoQuiz"><i class="fa-solid fa-right-long"></i></button>
@@ -75,9 +75,9 @@
         <div class="texto" style="display: none;" id="div_pergunta4">
             <h2 class="titulo">Qual seu hobby preferido?</h2>
             <input type="radio" class="input_radio" id="" name="perg4" value="p5"> Tocar música <br>
-            <input type="radio" class="input_radio" id="" name="perg4" value="p1"> Nadar <br>
-            <input type="radio" class="input_radio" id="" name="perg4" value="p3"> Ler <br>
-            <input type="radio" class="input_radio" id="" name="perg4" value="p2,p4"> Jogar <br>
+            <input type="radio" class="input_radio" id="" name="perg4" value="p1"> Nadar no mar<br>
+            <input type="radio" class="input_radio" id="" name="perg4" value="p3"> Ler na biblioteca<br>
+            <input type="radio" class="input_radio" id="" name="perg4" value="p2,p4"> Jogar videogames <br>
             <br>
             <button onclick="proximo('div_pergunta4')" class="botaoQuiz"><i class="fa-solid fa-right-long"></i></button>
         </div>
@@ -89,6 +89,7 @@
 
         <div class="erro" style="display: none;" id="div_erro">
             <h2>Erro <i class="fa-solid fa-bug"></i></h2>
+            <p></p>
         </div>
     </div>
 
@@ -101,15 +102,15 @@
 <script>
 
 
-    class MinhaClasse {
-        sort(lista) {
-            //...
-        }
-    }
+    // class MinhaClasse {
+    //     sort(lista) {
+    //         //...
+    //     }
+    // }
 
-    const classe = new MinhaClasse();
+    //const classe = new MinhaClasse();
 
-    console.log(classe.sort([3, 2, 6, 4, 8]));
+    //console.log(classe.sort([3, 2, 6, 4, 8]));
 
     const divs = ["div_cadastro",
         "div_pergunta1",
@@ -124,21 +125,28 @@
     let queryValuePerg4 = "";
 
     let personalidades = [
-        {"Personalidade": "pescador", "Pontuacao": 0,},
-        {"Personalidade": "maluco", "Pontuacao": 0,},
-        {"Personalidade": "sonequinha", "Pontuacao": 0,},
-        {"Personalidade": "familiar", "Pontuacao": 0,},
-        {"Personalidade": "musical", "Pontuacao": 0}
+        { "Personalidade": "pescador", "Pontuacao": 0, },
+        { "Personalidade": "maluco", "Pontuacao": 0, },
+        { "Personalidade": "sonequinha", "Pontuacao": 0, },
+        { "Personalidade": "familiar", "Pontuacao": 0, },
+        { "Personalidade": "musical", "Pontuacao": 0 }
     ]
 
-    let P1 = 0;
-    let P2 = 0;
-    let P3 = 0;
-    let P4 = 0;
-    let P5 = 0;
+    // let P1 = 0;
+    // let P2 = 0;
+    // let P3 = 0;
+    // let P4 = 0;
+    // let P5 = 0;
 
-    function divErro(mensagem) {
+    function sumirErro() {
+        document.getElementById('div_erro').style = "display: none"
+    }
 
+    function erro(mensagem) {
+        document.getElementById('div_erro').style = "display: block";
+
+        div_erro.innerHTML = mensagem;
+        setTimeout(sumirErro, 3000);
     }
 
 
@@ -151,17 +159,34 @@
     }
 
     function cadastrar() {
-        nome = input_nome.value
+        nome = input_nome.value.trim();
         select = select_gosto.value
 
-        if (nome !== null && select !== "#") {
+        if (nome != "") {
             console.log('funçao para cadastrar')
 
             divNone(divs[0])
             divBlock(divs[1])
         } else {
-            alert('selecione uma opçao')
+            erro(`<h2>Erro <i class="fa-solid fa-bug"></i></h2>
+                    Nome deve ser preenchido corretamente`)
+
+            return
         }
+
+
+        if (select !== "#") {
+            console.log('funçao para cadastrar')
+
+            divNone(divs[0])
+            divBlock(divs[1])
+        } else {
+            erro(`<h2>Erro <i class="fa-solid fa-bug"></i></h2>
+                    Uma opção deve ser escolhida`)
+            return
+        }
+
+
     }
 
     function proximo(div) {
@@ -209,7 +234,8 @@
             resultado();
 
         } else {
-            alert('div não identificada')
+            erro(`<h2>Erro <i class="fa-solid fa-bug"></i></h2>
+                    Página não encontrada`)
         }
 
         var queryValue = descobrirQueryValue(div);
@@ -242,7 +268,7 @@
             return queryValue = document.querySelector('input[name="perg4"]:checked').value;
 
         } else {
-            alert('Você está no cadastro ou no resultado')
+            erro(`Você está no cadastro ou no resultado`)
             return queryValue = '#'
         }
 
@@ -288,6 +314,8 @@
 
     function resultado() {
 
+        console.log(personalidades)
+
         const pontuacoes = personalidades.map(persona => persona.Pontuacao);
         const maiorPontuacao = Math.max(...pontuacoes)
         console.log("maior pontuação:", maiorPontuacao)
@@ -298,7 +326,7 @@
         console.log("personalidade vencedora:", personalidadeVencedora.Personalidade)
 
 
-        if (personalidadeVencedora.Personalidade === "pescador" ) {
+        if (personalidadeVencedora.Personalidade === "pescador") {
             document.getElementById(divs[5]).innerHTML = `<img src="./assets/imgs/pingu-bravo.jpeg" alt="">
             <h1>Tome aqui seu resultado</h1>
             <p> Pingu Pescador </p>`
