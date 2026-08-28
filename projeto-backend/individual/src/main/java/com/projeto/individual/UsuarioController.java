@@ -16,11 +16,15 @@ import java.sql.Statement;
 public class UsuarioController {
     private JdbcTemplate jdbcTemplate;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Usuario> getJaAssistiu(@PathVariable Integer id) {
+    public UsuarioController(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @GetMapping("/jaAssistiu")
+    public ResponseEntity<Usuario> getJaAssistiu() {
         String sql = "select jaAssistiu from metrica;";
 
-        Usuario usuario = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Usuario.class), id);
+        Usuario usuario = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Usuario.class));
 
         return ResponseEntity.status(200).body(usuario);
 

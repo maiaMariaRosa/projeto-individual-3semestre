@@ -32,7 +32,7 @@
             <input type="text" class="input_nome" id="input_nome" placeholder="Digite seu nome aqui...">
             <br> <br>
             Gosta do desenho do Pingu?
-            <select name="" id="select_gosto">
+            <select onload="carregarOpcoes()" name="" id="select_opcoes">
                 <option value="#" selected disabled>Selecione uma opção</option>
                 <option value="S">Sim</option>
                 <option value="N">Não</option>
@@ -150,9 +150,35 @@
         document.getElementById(div).style = "display: block"
     }
 
+    function carregarOpcoes(){
+        fetch('/usuario/jaAssistiu', {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json",
+            }
+        })
+        .then( function(resposta){
+            if(resposta.ok){
+                return resposta.json();
+            }
+        })
+        .then(function(opcoes){
+            select_opcoes.innerHTML = `<option value="#" selected disabled>Selecione uma opção</option>`
+
+            var cont = 0;
+
+            opcoes.array.forEach(opcao => {
+                const option = document.createElement("option");
+                option.value = ++cont
+                option.textContent = opcao.jaAssistiu
+                select_opcoes.appendChild(option);
+            });
+        })
+    }
+
     function cadastrar() {
         nickname = input_nome.value.trim();
-        select = select_gosto.value
+        select = select_opcoes.value
 
         if (nickname != "" && select !== '#') {
             fetch('/usuario/cadastrar', {
