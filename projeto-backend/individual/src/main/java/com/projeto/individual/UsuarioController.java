@@ -17,21 +17,17 @@ public class UsuarioController {
     private JdbcTemplate jdbcTemplate;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> getJaAssistiu(@PathVariable Integer id){
-        String sql = "select jaAssistiu from usuario where id = ?;";
+    public ResponseEntity<Usuario> getJaAssistiu(@PathVariable Integer id) {
+        String sql = "select jaAssistiu from metrica;";
 
-        try {
-            Usuario usuario = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Usuario.class), id);
+        Usuario usuario = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Usuario.class), id);
 
-            return ResponseEntity.status(200).body(usuario);
+        return ResponseEntity.status(200).body(usuario);
 
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody Usuario usuarioParaCriar){
+    public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody Usuario usuarioParaCriar) {
         String sql = "insert into usuarios (nickname, jaAssistiu) values (?,?);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -47,6 +43,6 @@ public class UsuarioController {
         Integer idGerado = keyHolder.getKeyAs(Integer.class);
         usuarioParaCriar.setIdNickname(idGerado);
 
-        return ResponseEntity.status(2000).body(usuarioParaCriar);
+        return ResponseEntity.status(200).body(usuarioParaCriar);
     }
 }

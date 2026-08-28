@@ -91,6 +91,9 @@
             <h2>Erro <i class="fa-solid fa-bug"></i></h2>
             <p></p>
         </div>
+
+        <div class="sucesso" style="display: none;" id="div_sucesso">
+        </div>
     </div>
 
 
@@ -100,17 +103,6 @@
 
 </html>
 <script>
-
-
-    // class MinhaClasse {
-    //     sort(lista) {
-    //         //...
-    //     }
-    // }
-
-    //const classe = new MinhaClasse();
-
-    //console.log(classe.sort([3, 2, 6, 4, 8]));
 
     const divs = ["div_cadastro",
         "div_pergunta1",
@@ -159,33 +151,35 @@
     }
 
     function cadastrar() {
-        nome = input_nome.value.trim();
+        nickname = input_nome.value.trim();
         select = select_gosto.value
 
-        if (nome != "") {
-            console.log('funçao para cadastrar')
+        if (nickname != "" && select !== '#') {
+            fetch('/usuario/cadastrar', {
+                method: "POST",
+                hearders: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    nicknameServer: nickname,
+                    selectServer: select
+                })
+            })
+            .then (function(resposta){
+                document.getElementById('div_sucesso').style = "display: Block";
 
-            divNone(divs[0])
-            divBlock(divs[1])
-        } else {
-            erro(`<h2>Erro <i class="fa-solid fa-bug"></i></h2>
-                    Nome deve ser preenchido corretamente`)
+                setTimeout(divNone('div_sucesso', 3000))
+            })
 
-            return
-        }
+        divNone(divs[0])
+        divBlock(divs[1])
+    } else {
+        erro(`<h2>Erro <i class="fa-solid fa-bug"></i></h2>
+                Nome deve ser preenchido corretamente. <br>
+                Uma opção deve ser escolhida.`)
 
-
-        if (select !== "#") {
-            console.log('funçao para cadastrar')
-
-            divNone(divs[0])
-            divBlock(divs[1])
-        } else {
-            erro(`<h2>Erro <i class="fa-solid fa-bug"></i></h2>
-                    Uma opção deve ser escolhida`)
-            return
-        }
-
+        return;
+    }
 
     }
 
@@ -357,78 +351,6 @@
             <p> Não encontrei um resultado pra voce </p>`
         }
 
-
-        // Pingu pescador - p1
-        // Pingu maluco - p2
-        // Pinga Sonequinha - p3
-        // Pingu familiar - p4
-        // Pingu musical - p5
-
-        /*
-           let maiorResultadoIndice;
-   
-           let resultadoAuxiliar;
-   
-           var resultados = [
-               P1,
-               P2,
-               P3,
-               P4,
-               P5
-           ]
-   
-      
-           //4, 6, 8, 2, 1
-           //2,6,8,4,1
-           //1,6,8,4,2
-           //1,4,8,6,2
-           //1,2,8,6,4
-           //1,2,6,8,4
-           console.log("personalidade 1:",P1)
-               console.log("vetor antes",resultados)
-   
-           for (var j = 0; j < resultados.length; j++) {
-     
-               for (var i = 1; i < resultados.length; i++) {
-                       if(resultados[j] > resultado[i]){
-                           resultadoAuxiliar = resultadoAuxiliar[j]
-                           resultados[j] = resultados[i]
-                           resultados[i] = resultadoAuxiliar
-                       }
-               }
-           }
-   
-      
-           console.log("Resultados:",
-               "P1: ", P1,
-               "P2: ", P2,
-               "P3: ", P3,
-               "P4: ", P4,
-               "P5: ", P5)
-               console.log("vetor",resultados)
-           console.log('resultado na posição 0:', resultados[0])
-   
-   
-           for (var i = 0; i < resultados.length; i++) {
-               if (resultados[i] > resultados[i + 1]) {
-                   console.log("resultadao ", resultados[0])
-                   resultadoAuxiliar = resultados[i + 1]
-                   resultados[i + 1] = resultados[i]
-                   resultados[i] = resultadoAuxiliar
-   
-               } else {
-   
-                   console.log("resultadao ", resultados[0])
-                   continue;
-                   // resultadoAuxiliar = resultados[i++]
-               }
-           }*/
-
-        // Pingu pescador - p1
-        // Pingu maluco - p2
-        // Pinga Sonequinha - p3
-        // Pingu familiar - p4
-        // Pingu musical - p5 Função bubble sort (ordenação)
 
 
     }

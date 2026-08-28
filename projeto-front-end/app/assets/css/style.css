@@ -106,3 +106,18 @@ select {
   align-content: center;
   padding: 0.5%;
 }
+
+.sucesso{
+   color: #28951e;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: #00000084 0 2px 5px;
+  width: 200px;
+  height: 170px;
+  position: fixed;
+  top: 100px;
+  right: 500px;
+  display: flex;
+  align-content: center;
+  padding: 0.5%;
+}
