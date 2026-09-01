@@ -48,7 +48,8 @@
             <input type="radio" class="input_radio" name="perg1" id="" value="p2"> Ir para o circo <br>
             <input type="radio" class="input_radio" name="perg1" id="" value="p3"> Dormir numa cama quentinha <br>
             <br>
-            <button onclick="proximo('div_pergunta1')" class="botaoQuiz"><i class="fa-solid fa-right-long"></i></button>
+            <button onclick="proximo('div_pergunta1') " class="botaoQuiz"><i
+                    class="fa-solid fa-right-long"></i></button>
         </div>
 
         <div class="texto" style="display: none;" id="div_pergunta2">
@@ -111,10 +112,6 @@
         "div_pergunta4",
         "div_resultado"]
 
-    let queryValuePerg1 = "";
-    let queryValuePerg2 = "";
-    let queryValuePerg3 = "";
-    let queryValuePerg4 = "";
 
     let personalidades = [
         { "Personalidade": "pescador", "Pontuacao": 0, },
@@ -150,30 +147,30 @@
         document.getElementById(div).style = "display: block"
     }
 
-    function carregarOpcoes(){
+    function carregarOpcoes() {
         fetch('/usuario/jaAssistiu', {
             method: "GET",
             headers: {
                 "Content-type": "application/json",
             }
         })
-        .then( function(resposta){
-            if(resposta.ok){
-                return resposta.json();
-            }
-        })
-        .then(function(opcoes){
-            select_opcoes.innerHTML = `<option value="#" selected disabled>Selecione uma opção</option>`
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    return resposta.json();
+                }
+            })
+            .then(function (opcoes) {
+                select_opcoes.innerHTML = `<option value="#" selected disabled>Selecione uma opção</option>`
 
-            var cont = 0;
+                var cont = 0;
 
-            opcoes.array.forEach(opcao => {
-                const option = document.createElement("option");
-                option.value = ++cont
-                option.textContent = opcao.jaAssistiu
-                select_opcoes.appendChild(option);
-            });
-        })
+                opcoes.array.forEach(opcao => {
+                    const option = document.createElement("option");
+                    option.value = ++cont
+                    option.textContent = opcao.jaAssistiu
+                    select_opcoes.appendChild(option);
+                });
+            })
     }
 
     function cadastrar() {
@@ -191,21 +188,21 @@
                     selectServer: select
                 })
             })
-            .then (function(resposta){
-                document.getElementById('div_sucesso').style = "display: Block";
+                .then(function (resposta) {
+                    document.getElementById('div_sucesso').style = "display: Block";
 
-                setTimeout(divNone('div_sucesso', 3000))
-            })
+                    setTimeout(divNone('div_sucesso', 3000))
+                })
 
-        divNone(divs[0])
-        divBlock(divs[1])
-    } else {
-        erro(`<h2>Erro <i class="fa-solid fa-bug"></i></h2>
+            divNone(divs[0])
+            divBlock(divs[1])
+        } else {
+            erro(`<h2>Erro <i class="fa-solid fa-bug"></i></h2>
                 Nome deve ser preenchido corretamente. <br>
                 Uma opção deve ser escolhida.`)
 
-        return;
-    }
+            return;
+        }
 
     }
 
@@ -251,15 +248,12 @@
 
             divNone('div_fotoHeader');
 
-            resultado();
-
         } else {
             erro(`<h2>Erro <i class="fa-solid fa-bug"></i></h2>
                     Página não encontrada`)
         }
 
         var queryValue = descobrirQueryValue(div);
-        console.log("query value: ", queryValue)
 
         if (queryValue === '#') {
             alert('selecione uma opçao')
@@ -268,34 +262,39 @@
             adicionarPontos(queryValue);
 
             divNone(divAtual);
+
+            if (proximaDiv == divs[5]) {
+                resultado();
+            }
+
             divBlock(proximaDiv);
+
             return;
         }
     }
 
     function descobrirQueryValue(div) {
-        if (div === divs[1]) {
+        if (div == divs[1]) {
 
             return queryValue = document.querySelector('input[name="perg1"]:checked').value;
 
-        } else if (div === divs[2]) {
+        } else if (div == divs[2]) {
             return queryValue = document.querySelector('input[name="perg2"]:checked').value;
 
-        } else if (div === divs[3]) {
+        } else if (div == divs[3]) {
             return queryValue = document.querySelector('input[name="perg3"]:checked').value;
 
-        } else if (div === divs[4]) {
+        } else if (div == divs[4]) {
             return queryValue = document.querySelector('input[name="perg4"]:checked').value;
 
         } else {
             erro(`Você está no cadastro ou no resultado`)
             return queryValue = '#'
         }
-
     }
 
+
     function adicionarPontos(queryValue) {
-        console.log('queryValue no adicionarPontos: ', queryValue)
 
         if (queryValue.includes("p1")) {
             //P1 += 1;
@@ -334,39 +333,47 @@
 
     function resultado() {
 
-        console.log(personalidades)
+        console.log("Personalidades", personalidades)
+        for (const personalizao of personalidades) {
+            console.log("Personalidade", personalizao.Personalidade)
+            console.log("Pontuacao", personalizao.Pontuacao)
+        }
+        console.log("Pontuacoes", personalidades.map(p => p["Pontuacao"]))
 
-        const pontuacoes = personalidades.map(persona => persona.Pontuacao);
+
+        let pontuacoes = personalidades.map(persona => persona.Pontuacao);
+
+        console.log("todas pontuacoes ", pontuacoes)
         const maiorPontuacao = Math.max(...pontuacoes)
         console.log("maior pontuação:", maiorPontuacao)
 
         const personalidadeVencedora = personalidades.find(
-            persona => persona.Pontuacao === maiorPontuacao
+            persona => persona.Pontuacao == maiorPontuacao
         )
         console.log("personalidade vencedora:", personalidadeVencedora.Personalidade)
 
 
-        if (personalidadeVencedora.Personalidade === "pescador") {
+        if (personalidadeVencedora.Personalidade == "pescador") {
             document.getElementById(divs[5]).innerHTML = `<img src="./assets/imgs/pingu-bravo.jpeg" alt="">
             <h1>Tome aqui seu resultado</h1>
             <p> Pingu Pescador </p>`
 
-        } else if (personalidadeVencedora.Personalidade === "maluco") {
+        } else if (personalidadeVencedora.Personalidade == "maluco") {
             document.getElementById(divs[5]).innerHTML = `<img src="./assets/imgs/pingu-bravo.jpeg" alt="">
             <h1>Tome aqui seu resultado</h1>
             <p> Pingu Maluco </p>`
 
-        } else if (personalidadeVencedora.Personalidade === "sonequinha") {
+        } else if (personalidadeVencedora.Personalidade == "sonequinha") {
             document.getElementById(divs[5]).innerHTML = `<img src="./assets/imgs/pingu-bravo.jpeg" alt="">
             <h1>Tome aqui seu resultado</h1>
             <p> Pinga Sonequinha </p>`
 
-        } else if (personalidadeVencedora.Personalidade === "familiar") {
+        } else if (personalidadeVencedora.Personalidade == "familiar") {
             document.getElementById(divs[5]).innerHTML = `<img src="./assets/imgs/pingu-bravo.jpeg" alt="">
             <h1>Tome aqui seu resultado</h1>
             <p> Pingu Familiar </p>`
 
-        } else if (personalidadeVencedora.Personalidade === "musical") {
+        } else if (personalidadeVencedora.Personalidade == "musical") {
             document.getElementById(divs[5]).innerHTML = `<img src="./assets/imgs/pingu-bravo.jpeg" alt="">
             <h1>Tome aqui seu resultado</h1>
             <p> Pingu Musical </p>`
