@@ -1,10 +1,10 @@
-package com.projeto.individual;
+package com.projeto.indivual;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class IndividualApplicationTests {
+class IndivualApplicationTests {
 
 	@Test
 	void contextLoads() {

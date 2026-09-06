@@ -1,13 +1,13 @@
-package com.projeto.individual;
+package com.projeto.indivual;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class IndividualApplication {
+public class IndivualApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(IndividualApplication.class, args);
+		SpringApplication.run(IndivualApplication.class, args);
 	}
 
 }

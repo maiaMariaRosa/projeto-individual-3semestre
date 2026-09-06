@@ -34,9 +34,6 @@
             Gosta do desenho do Pingu?
             <select onload="carregarOpcoes()" name="" id="select_opcoes">
                 <option value="#" selected disabled>Selecione uma opção</option>
-                <option value="S">Sim</option>
-                <option value="N">Não</option>
-                <option value="NA">Nunca assisti</option>
             </select>
             <button onclick="cadastrar()" class="botao">Começar Quizz</button>
         </div>
@@ -95,15 +92,17 @@
 
         <div class="sucesso" style="display: none;" id="div_sucesso">
         </div>
+
     </div>
 
 
-
+<img src="" style="display: flex; align-self: center;" alt="">
 
 </body>
 
 </html>
 <script>
+    window.onload = carregarOpcoes();
 
     const divs = ["div_cadastro",
         "div_pergunta1",
@@ -147,63 +146,65 @@
         document.getElementById(div).style = "display: block"
     }
 
-    function carregarOpcoes() {
-        fetch('/usuario/jaAssistiu', {
-            method: "GET",
-            headers: {
-                "Content-type": "application/json",
+    async function carregarOpcoes() {
+        let resposta = await fetch("http://localhost:8080/metricas")
+        let selecao = await resposta.json();
+
+        console.log(selecao)
+
+        var resultado = document.getElementById('select_opcoes')
+
+        for (let i = 0; i < selecao.length; i++) {
+            if (i == 0) {
+                resultado.innerHTML = `<option value="${selecao[i].opcao}" selected disabled >Selecione uma opção</option>`
+            } else {
+                resultado.innerHTML += `<option value="${selecao[i].opcao}">${selecao[i].opcao}</option>`
             }
-        })
-            .then(function (resposta) {
-                if (resposta.ok) {
-                    return resposta.json();
-                }
-            })
-            .then(function (opcoes) {
-                select_opcoes.innerHTML = `<option value="#" selected disabled>Selecione uma opção</option>`
-
-                var cont = 0;
-
-                opcoes.array.forEach(opcao => {
-                    const option = document.createElement("option");
-                    option.value = ++cont
-                    option.textContent = opcao.jaAssistiu
-                    select_opcoes.appendChild(option);
-                });
-            })
+        }
     }
 
-    function cadastrar() {
-        nickname = input_nome.value.trim();
-        select = select_opcoes.value
+    async function cadastrar() {
+        var nickname = input_nome.value.trim();
+        var select = select_opcoes.value;
+        var valorSelect = null;
 
-        if (nickname != "" && select !== '#') {
-            fetch('/usuario/cadastrar', {
+        if (nickname != "" && select != '#') {
+            if (select == "Sim") {
+                valorSelect = 2
+
+            } else if (select == "Já ouvi falar") {
+                valorSelect = 3
+
+            } else if (select == "Nunca Assisti") {
+                valorSelect = 4
+
+            } else {
+                console.log("Você não devia estar aqui")
+                return
+            }
+
+            let resposta = await fetch("http://localhost:8080/usuarios", {
                 method: "POST",
-                hearders: {
-                    "Content-Type": "application/json",
+                headers: {
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    nicknameServer: nickname,
-                    selectServer: select
+                    nickname: nickname,
+                    fk_metrica: valorSelect
                 })
-            })
-                .then(function (resposta) {
-                    document.getElementById('div_sucesso').style = "display: Block";
 
-                    setTimeout(divNone('div_sucesso', 3000))
-                })
+            })
+
+            let resultado = resposta.json();
+
+            console.log("cadastrado com sucesso")
 
             divNone(divs[0])
             divBlock(divs[1])
+
         } else {
-            erro(`<h2>Erro <i class="fa-solid fa-bug"></i></h2>
-                Nome deve ser preenchido corretamente. <br>
-                Uma opção deve ser escolhida.`)
-
-            return;
+            erro(`<i class="fa-solid fa-bug"></i> <h3>Erro ao cadastrar.</h3> Todas informações devem ser preenchidas!`);
         }
-
     }
 
     function proximo(div) {
@@ -331,8 +332,7 @@
 
     }
 
-    function resultado() {
-
+    async function resultado() {
         console.log("Personalidades", personalidades)
         for (const personalizao of personalidades) {
             console.log("Personalidade", personalizao.Personalidade)
@@ -352,37 +352,50 @@
         )
         console.log("personalidade vencedora:", personalidadeVencedora.Personalidade)
 
+        let receberResultado = await fetch('http://localhost:8080/resultados')
+        let resultado = await receberResultado.json();
 
-        if (personalidadeVencedora.Personalidade == "pescador") {
-            document.getElementById(divs[5]).innerHTML = `<img src="./assets/imgs/pingu-bravo.jpeg" alt="">
-            <h1>Tome aqui seu resultado</h1>
-            <p> Pingu Pescador </p>`
+        console.log(resultado)
 
-        } else if (personalidadeVencedora.Personalidade == "maluco") {
-            document.getElementById(divs[5]).innerHTML = `<img src="./assets/imgs/pingu-bravo.jpeg" alt="">
-            <h1>Tome aqui seu resultado</h1>
-            <p> Pingu Maluco </p>`
+        for (let i = 0; i < resultado.length; i++) {
 
-        } else if (personalidadeVencedora.Personalidade == "sonequinha") {
-            document.getElementById(divs[5]).innerHTML = `<img src="./assets/imgs/pingu-bravo.jpeg" alt="">
-            <h1>Tome aqui seu resultado</h1>
-            <p> Pinga Sonequinha </p>`
+            if (personalidadeVencedora.Personalidade == "pescador") {
+                document.getElementById(divs[5]).innerHTML = `<img width="400px" style="display: flex; align-items: center;" src="./assets/imgs/pingu-peixe.jpeg" alt="">
+            <h1><i class="fa-brands fa-linux"></i>${resultado[0].personalidade}</h1>
+            <p>${resultado[0].descricao}</p>
+            `
 
-        } else if (personalidadeVencedora.Personalidade == "familiar") {
-            document.getElementById(divs[5]).innerHTML = `<img src="./assets/imgs/pingu-bravo.jpeg" alt="">
-            <h1>Tome aqui seu resultado</h1>
-            <p> Pingu Familiar </p>`
+            } else if (personalidadeVencedora.Personalidade == "maluco") {
+                document.getElementById(divs[5]).innerHTML = `<img width="400px" style="display: flex; align-items: center;" src="./assets/imgs/pingu-linguarudo" alt="">
+            <h1><i class="fa-brands fa-linux"></i>${resultado[1].personalidade}</h1>
+            <p>${resultado[1].descricao}</p>
+            `
 
-        } else if (personalidadeVencedora.Personalidade == "musical") {
-            document.getElementById(divs[5]).innerHTML = `<img src="./assets/imgs/pingu-bravo.jpeg" alt="">
-            <h1>Tome aqui seu resultado</h1>
-            <p> Pingu Musical </p>`
+            } else if (personalidadeVencedora.Personalidade == "sonequinha") {
+                document.getElementById(divs[5]).innerHTML = `<img width="400px" style="display: flex; align-items: center;" src="./assets/imgs/sonequinha.png" alt="">
+            <h1><i class="fa-brands fa-linux"></i>${resultado[2].personalidade}</h1>
+            <p>${resultado[2].descricao}</p>
+            `
 
-        } else {
-            document.getElementById(divs[5]).innerHTML = `<img src="./assets/imgs/pingu-bravo.jpeg" alt="">
-            <h1>Tome aqui seu resultado</h1>
-            <p> Não encontrei um resultado pra voce </p>`
+            } else if (personalidadeVencedora.Personalidade == "familiar") {
+                document.getElementById(divs[5]).innerHTML = `<img width="400px" style="display: flex; align-items: center;" src="./assets/imgs/pingu-e-familia.jpeg" alt="">
+            <h1><i class="fa-brands fa-linux"></i>${resultado[3].personalidade}</h1>
+            <p>${resultado[3].descricao}</p>
+            `
+
+            } else if (personalidadeVencedora.Personalidade == "musical") {
+                document.getElementById(divs[5]).innerHTML = `<img width="400px" style="display: flex; align-items: center;" src="./assets/imgs/musical.png" alt="">
+            <h1><i class="fa-brands fa-linux"></i>${resultado[4].personalidade}</h1>
+            <p>${resultado[4].descricao}</p>
+            `
+
+            } else {
+                document.getElementById(divs[5]).innerHTML = `<img width="400px" style="display: flex; align-items: center;" src="./assets/imgs/pingu-bravo.jpeg" alt="">
+            <h1><i class="fa-solid fa-face-frown"></i>Não encontrei um resultado pra voce </h1>`
+            }
+
         }
+
 
 
 

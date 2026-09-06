@@ -1,16 +1,14 @@
-package com.projeto.individual;
+package com.projeto.indivual;
 
 public class Resultado {
     private Integer idResultado;
     private String personalidade;
     private String descricao;
-    private String imagem;
 
     public Resultado(Integer idResultado, String personalidade, String descricao, String imagem) {
         this.idResultado = idResultado;
         this.personalidade = personalidade;
         this.descricao = descricao;
-        this.imagem = imagem;
     }
 
     public Resultado() {
@@ -38,13 +36,5 @@ public class Resultado {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    public String getImagem() {
-        return imagem;
-    }
-
-    public void setImagem(String imagem) {
-        this.imagem = imagem;
     }
 }
