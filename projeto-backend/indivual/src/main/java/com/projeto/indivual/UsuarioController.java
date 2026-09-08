@@ -24,6 +24,10 @@ public class UsuarioController {
     public ResponseEntity<Usuario> cadastrar(@RequestBody Usuario usuarioParaCadastro) {
         String sql = "insert into usuario (nickname, fk_metrica) values (?,?);";
 
+        if(usuarioParaCadastro.getNickname().isBlank() || usuarioParaCadastro.getNickname().isEmpty()){
+            return ResponseEntity.status(400).build();
+        }
+        
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(con -> {
