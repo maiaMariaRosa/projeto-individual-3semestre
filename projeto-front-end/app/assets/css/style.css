@@ -1,6 +1,7 @@
+
 body {
   background-color: #ff2c17;
-  padding: 8%;
+  padding: 2%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,11 +12,11 @@ body {
   box-shadow: #0417927c 0 4px 13px;
   border-radius: 10%;
   width: 40%;
-  height: 600px;
+  height: 700px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 5%;
+  padding: 2%;
 }
 
 .fotoHeader {
@@ -87,7 +88,7 @@ select {
   border: none;
   border-radius: 20px;
   height: 26px;
-  width: 100%;
+  width: 105%;
   border: solid #8eb6f9 2px;
   color: #04179291;
 }
@@ -120,4 +121,9 @@ select {
   display: flex;
   align-content: center;
   padding: 0.5%;
+}
+
+.buttonPosicao{
+  display: flex;
+  justify-content: center;
 }

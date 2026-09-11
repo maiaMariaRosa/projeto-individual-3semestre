@@ -25,17 +25,26 @@
         </div>
 
         <div class="texto" style="display: block;" id="div_cadastro">
-            <h1 class="titulo">Olá <i class="fa-regular fa-face-laugh-beam"></i>
-                <br>
+            <h2 class="titulo">Olá <i class="fa-regular fa-face-laugh-beam"></i>
                 Qual seu nome?
-            </h1>
+            </h2>
             <input type="text" class="input_nome" id="input_nome" placeholder="Digite seu nome aqui...">
             <br> <br>
+            Quantos anos você tem? <br>
+            <input type="number" class="input_nome" id="input_idade" placeholder="0...">
+
+            <br>
+            <label for="nascimento">Data de Nascimento:
+                <input class="input_nome" type="date" id="input_data" name="nascimento">
+            </label>
+            <br>
             Gosta do desenho do Pingu?
             <select onload="carregarOpcoes()" name="" id="select_opcoes">
                 <option value="#" selected disabled>Selecione uma opção</option>
             </select>
-            <button onclick="cadastrar()" class="botao">Começar Quizz</button>
+            <span class="buttonPosicao">
+                <button onclick="cadastrar()" class="botao">Começar Quizz</button>
+            </span>
         </div>
 
         <div class="texto" style="display: none;" id="div_pergunta1">
@@ -96,7 +105,7 @@
     </div>
 
 
-<img src="" style="display: flex; align-self: center;" alt="">
+    <img src="" style="display: flex; align-self: center;" alt="">
 
 </body>
 
@@ -165,10 +174,13 @@
 
     async function cadastrar() {
         var nickname = input_nome.value.trim();
+        var idade = input_idade.value.trim();
         var select = select_opcoes.value;
+        var dataNascimento = document.getElementById('input_data').value;
+        //var dataFormatada = dataNascimento.toLocaleDateString('pt-BR');
         var valorSelect = null;
 
-        if (nickname != "" && select != '#') {
+        if (nickname != "" && select != '#' && idade > 0) {
             if (select == "Sim") {
                 valorSelect = 2
 
@@ -190,6 +202,7 @@
                 },
                 body: JSON.stringify({
                     nickname: nickname,
+                    idade: idade,
                     fk_metrica: valorSelect
                 })
 

@@ -5,18 +5,44 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+
 public class Usuario {
     private Integer idUsuario;
     private String nickname;
+    private Integer idade;
     private Integer fk_metrica;
+    private Date dataNascimento;
 
-    public Usuario(Integer idUsuario, String nickname, Integer fk_metrica) {
+    public Usuario(Integer idUsuario, String nickname, Integer idade, Integer fk_metrica, Date dataNascimento) {
         this.idUsuario = idUsuario;
         this.nickname = nickname;
+        this.idade = idade;
         this.fk_metrica = fk_metrica;
+        this.dataNascimento = dataNascimento;
     }
 
     public Usuario() {
+    }
+
+    public Integer getIdUsuario() {
+        return idUsuario;
+    }
+
+    public Date getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(Date dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    public Integer getIdade() {
+        return idade;
+    }
+
+    public void setIdade(Integer idade) {
+        this.idade = idade;
     }
 
     public Integer setIdUsuario() {

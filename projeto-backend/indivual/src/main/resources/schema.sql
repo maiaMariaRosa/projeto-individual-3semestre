@@ -8,6 +8,8 @@ create table usuario
 (
     idUsuario  int primary key auto_increment,
     nickname   varchar(100),
+    idade int,
+    dataNascimento date,
     fk_metrica int,
     constraint fk_metrica
         foreign key(fk_metrica)

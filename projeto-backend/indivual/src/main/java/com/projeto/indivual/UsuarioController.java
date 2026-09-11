@@ -7,6 +7,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 
@@ -22,12 +23,12 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<Usuario> cadastrar(@RequestBody Usuario usuarioParaCadastro) {
-        String sql = "insert into usuario (nickname, fk_metrica) values (?,?);";
+        String sql = "insert into usuario (nickname, idade, fk_metrica) values (?,?,?);";
 
         if(usuarioParaCadastro.getNickname().isBlank() || usuarioParaCadastro.getNickname().isEmpty()){
             return ResponseEntity.status(400).build();
         }
-        
+
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(con -> {
@@ -35,7 +36,8 @@ public class UsuarioController {
                     sql, Statement.RETURN_GENERATED_KEYS
             );
             ps.setString(1, usuarioParaCadastro.getNickname());
-            ps.setInt(2, usuarioParaCadastro.getFk_metrica());
+            ps.setInt(2, usuarioParaCadastro.getIdade());
+            ps.setInt(3, usuarioParaCadastro.getFk_metrica());
 
             return ps;
         }, keyHolder);
